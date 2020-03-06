@@ -2,24 +2,23 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 class App extends React.Component {
-  constructor(props){
-    super(props); //super is a reference to the parents constructor function
+  state ={lat: null, errorMessage: ''};
 
-    this.state = {lat: null};
-
-    window.navigator.geolocation.getCurrentPosition( //it getss the users current location 
-      (position) => {
-        this.setState({ lat: position.coords.latitude}) // inorder to update our state we use setState
-        
-      }, // this goes if the current is determined
-      (err) => console.log(err)
+  componentDidMount(){
+    window.navigator.geolocation.getCurrentPosition( //it gets the users current location 
+      position => this.setState({ lat: position.coords.latitude}), // inorder to update our state we use setState
+      err => this.setState({ errorMessage: err.message})   
     );
-    
   }
-  // React says we have to define render
+  
   render() {
-    return <div>Latitude:{this.state.lat} </div>
-    
+    if(this.state.errorMessage && !this.state.lat){
+      return <div>Error:{this.state.errorMessage}</div>;
+    }  
+    if (!this.state.errorMessage && this.state.lat){
+      return <div>latitude:{this.state.lat}</div>;
+    }
+    return <div>Loading!</div>;
   }
 }
 ReactDOM.render(<App />, document.querySelector('#root'))
