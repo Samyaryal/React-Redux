@@ -1,18 +1,19 @@
 import React from 'react';
 
 class ImageCard extends React.Component{
-    constructor(props){
-        super(props);
+    constructor(props){ // initial state 
+        super(props); // base class
         this.state={spans: 0};
-        this.imageRef = React.createRef();
+        this.imageRef = React.createRef(); //reach into the dom and interact with some individual element 
     }
     
-    //to access this.imageRef
+    //to access this.imageRef as this method runs after the DOM is rendered
     componentDidMount(){ 
-       this.imageRef.current.addEventListener('load', this.setSpans);
+       this.imageRef.current.addEventListener('load', this.setSpans); // added eventlistener to current object
     }
+    //when the image loads following method is called
     setSpans = () => {
-        const height = this.imageRef.current.clientHeight;
+        const height = this.imageRef.current.clientHeight; // access the height of each image
         const spans = Math.ceil(height / 10 );
         this.setState({spans});
     }
@@ -21,7 +22,7 @@ class ImageCard extends React.Component{
 
         return (
             <div style={{gridRowEnd: `span ${this.state.spans}`}} >
-               <img 
+               <img  // wire it up with an individual element by passing as a ref property
                    ref={this.imageRef}
                    alt={description} 
                    src={urls.regular}

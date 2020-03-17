@@ -5,7 +5,7 @@ class SearchBar extends React.Component {
 
     onFormSubmit = (event) => { // everytime we create a form, we dont want form to automatically submit itself, to prevent that event.preventDefault is called
         event.preventDefault();
-        this.props.onSubmit(this.state.term);  // in class props object is referenced as this.props
+        this.props.onSearch(this.state.term);  // in class props object is referenced as this.props
 
         //console.log(this.state.term); //the value of 'this' is always equal to SearchBar
     }
